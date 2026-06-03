@@ -1,0 +1,71 @@
+version: 2
+
+models:
+  - name: dim_teams
+    description: "Dimension table representing nations and their 2026 status."
+    columns:
+      - name: team_name
+        description: "Primary key for the team dimension."
+        data_tests:
+          - unique
+          - not_null
+
+  - name: fact_matches
+    description: "Atomic match record ledger showing home and away rows."
+    columns:
+      - name: match_fact_id
+        description: "MD5 hashed surrogate key representing one team in one match."
+        data_tests:
+          - unique
+          - not_null
+      - name: team_name
+        description: "The primary team for the row perspective."
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_teams')
+                field: team_name
+      - name: match_outcome
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ['Win', 'Draw', 'Loss']
+
+  - name: agg_group_scout
+    description: "2026 analytics layer calculating team form and group details."
+    columns:
+      - name: team_name
+        description: "Primary key at the group-team grain."
+        data_tests:
+          - unique
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_teams')
+                field: team_name
+      - name: group_name
+        description: "Official 2026 World Cup Group assignment."
+        data_tests:
+          - not_null
+      - name: modern_win_rate_pct
+        description: "Win rate since Jan 1, 2018."
+        data_tests:
+          - not_null
+
+  - name: agg_dark_horse
+    description: "Percentile Rank index score comparing low historic pedigree to strong competitive modern form."
+    columns:
+      - name: team_name
+        description: "Primary key for the dark horse index."
+        data_tests:
+          - unique
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_teams')
+                field: team_name
+      - name: dark_horse_index_score
+        description: "Calculated 0-100 score based on statistical form vs pedigree delta."
+        data_tests:
+          - not_null

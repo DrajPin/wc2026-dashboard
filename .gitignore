@@ -1,0 +1,18 @@
+# Virtual Environment
+venv/
+
+# Environment Variables & Secrets (CRITICAL)
+.env
+.streamlit/secrets.toml
+
+# Data Files
+data/
+
+# Python caching
+__pycache__/
+*.pyc
+
+# dbt artifacts (Bonus: stops compiled SQL from cluttering your git)
+dbt_project/target/
+dbt_project/logs/
+dbt_project/dbt_packages/

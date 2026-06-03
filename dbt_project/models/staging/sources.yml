@@ -1,0 +1,13 @@
+version: 2
+
+sources:
+  - name: raw
+    database: postgres    # Only change this line!
+    schema: raw
+    tables:
+      - name: past_results
+        description: 'All international football results 1872-2024 (Kaggle)'
+      - name: former_team_names
+        description: 'Historical country name changes (Kaggle)'
+      - name: wc_2026_fixtures
+        description: '2026 WC group draw and fixtures (openfootball)'
