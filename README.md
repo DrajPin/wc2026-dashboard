@@ -16,7 +16,7 @@ This project transforms raw historical international match data into a clean ana
 ## ⛓️ Data Architecture & Lineage
 The project follows an ELT (Extract, Load, Transform) architecture. Using dbt, I established a clear data lineage path to ensure every metric on the dashboard can be traced back to its raw source.
 
-![dbt Lineage Graph](wcdashboard/lineage_graph.png)
+![dbt Lineage Graph](wc2026-dashboard/lineage_graph.png)
 
 ## ⚙️ Key Engineering Features
 * **Automated Deduplication:** Implemented `ROW_NUMBER() OVER (PARTITION BY ...)` window functions within the `fact_matches` pipeline to catch and squash duplicate match listings natively in the database.
